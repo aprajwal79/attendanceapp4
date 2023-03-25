@@ -81,9 +81,9 @@ class MainActivity : AppCompatActivity(){
     override fun onResume() {
         super.onResume()
 
-        findViewById<Button>(R.id.btnVerify).isEnabled = userLists.size > 0
+       // findViewById<Button>(R.id.btnVerify).isEnabled = userLists.size > 0
     }
-
+/*
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 1 && resultCode == RESULT_OK) {
             try {
@@ -172,5 +172,5 @@ class MainActivity : AppCompatActivity(){
         super.onActivityResult(requestCode, resultCode, data)
 
     }
-
+*/
 }
