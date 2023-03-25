@@ -1,4 +1,4 @@
-package com.nitap.attendance;
+package com.nitap.attende;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,12 +11,8 @@ import com.ttv.face.FaceEngine;
 import com.ttv.facerecog.DBHelper;
 import com.ttv.facerecog.R;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.Objects;
-
-import kotlin.jvm.internal.DefaultConstructorMarker;
 
 public class MainActivity extends AppCompatActivity {
 

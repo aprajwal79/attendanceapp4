@@ -1,4 +1,4 @@
-package com.nitap.attendance;
+package com.nitap.attende;
 
 import android.Manifest;
 import android.annotation.SuppressLint;

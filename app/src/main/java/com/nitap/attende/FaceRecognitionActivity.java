@@ -1,4 +1,4 @@
-package com.nitap.attendance;
+package com.nitap.attende;
 
 import static com.ttv.facerecog.R.*;
 
@@ -21,7 +21,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.ttv.face.FaceEngine;
 import com.ttv.face.FaceFeatureInfo;
 import com.ttv.face.FaceResult;
 import com.ttv.facerecog.CameraActivity;
@@ -131,7 +130,7 @@ public class FaceRecognitionActivity extends AppCompatActivity {
                 }
                 Intrinsics.checkNotNullExpressionValue(var20, "ImageRotator.getCorrectl…Image(this, data?.data!!)");
                 Bitmap bitmap = var20;
-                List<FaceResult> var21 = com.nitap.attendance.MainActivity.faceEngine.detectFace(bitmap);
+                List<FaceResult> var21 = com.nitap.attende.MainActivity.faceEngine.detectFace(bitmap);
                 Intrinsics.checkNotNullExpressionValue(var21, "FaceEngine.getInstance(this).detectFace(bitmap)");
                 if (var21 == null) {
                     display("FACERESULT NULL");
@@ -141,7 +140,7 @@ public class FaceRecognitionActivity extends AppCompatActivity {
                 final List faceResults = var21;
                 Collection var6 = (Collection)faceResults;
                 if (var6.size() == 1) {
-                    com.nitap.attendance.MainActivity.faceEngine.extractFeature(bitmap, true, faceResults);
+                    com.nitap.attende.MainActivity.faceEngine.extractFeature(bitmap, true, faceResults);
                     display("FEATURES EXTRACTED");
                    // StringCompanionObject var7 = StringCompanionObject.INSTANCE;
                     String var8 = "User%03d";
@@ -204,7 +203,7 @@ public class FaceRecognitionActivity extends AppCompatActivity {
                                     MainActivity.Companion.getUserLists().add(face);
 
                                     FaceFeatureInfo faceFeatureInfo = new FaceFeatureInfo(user_id, ((FaceResult)faceResults.get(0)).feature);
-                                    com.nitap.attendance.MainActivity.faceEngine.registerFaceFeature(faceFeatureInfo);
+                                    com.nitap.attende.MainActivity.faceEngine.registerFaceFeature(faceFeatureInfo);
                                     confirmUpdateDialog.cancel();
                                     View var10 = findViewById(id.btnVerify);
                                     Intrinsics.checkNotNullExpressionValue(var10, "findViewById<Button>(R.id.btnVerify)");

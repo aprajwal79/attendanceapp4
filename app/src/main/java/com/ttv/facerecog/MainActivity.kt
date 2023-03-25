@@ -2,20 +2,10 @@ package com.ttv.facerecog
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
-import android.text.TextUtils
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.ttv.face.FaceEngine
-import com.ttv.face.FaceFeatureInfo
-import com.ttv.face.FaceResult
 
 class  MainActivity : AppCompatActivity(){
     public companion object {
@@ -35,11 +25,11 @@ class  MainActivity : AppCompatActivity(){
 
 
         context = this
-        com.nitap.attendance.MainActivity.context = this
-        com.nitap.attendance.MainActivity.check = FaceEngine.getInstance(this).setActivation("")
+        com.nitap.attende.MainActivity.context = this
+        com.nitap.attende.MainActivity.check = FaceEngine.getInstance(this).setActivation("")
         FaceEngine.getInstance(this).init(2)
 
-        com.nitap.attendance.MainActivity.faceEngine = FaceEngine.getInstance(this)
+        com.nitap.attende.MainActivity.faceEngine = FaceEngine.getInstance(this)
 
         mydb = DBHelper(this)
         mydb!!.getAllUsers()
@@ -69,7 +59,7 @@ class  MainActivity : AppCompatActivity(){
          */
 
         //
-        val myintent = Intent(this, com.nitap.attendance.MainActivity::class.java)
+        val myintent = Intent(this, com.nitap.attende.MainActivity::class.java)
         startActivity(myintent)
 
     }
