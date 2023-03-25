@@ -47,14 +47,14 @@ class MainActivity : AppCompatActivity(){
         FaceEngine.getInstance(this).init(2)
 
         com.nitap.attendance.MainActivity.faceEngine = FaceEngine.getInstance(this)
-
+/*
         mydb = DBHelper(this)
         mydb!!.getAllUsers()
 
         val btnRegister = findViewById<Button>(R.id.btnRegister)
         btnRegister.setOnClickListener {
             val intent = Intent()
-            intent.setType("image/*")
+            intent.setType("image")
             intent.setAction(Intent.ACTION_PICK)
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1)
         }
@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity(){
             val intent = Intent(this, UserActivity::class.java)
             startActivity(intent)
         }
+        */
         //
         val myintent = Intent(this, com.nitap.attendance.MainActivity::class.java)
         startActivity(myintent)
@@ -171,5 +172,5 @@ class MainActivity : AppCompatActivity(){
         super.onActivityResult(requestCode, resultCode, data)
 
     }
-    
+
 }
