@@ -40,9 +40,14 @@ class MainActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         context = this
-        FaceEngine.getInstance(this).setActivation("")
+        com.nitap.attendance.MainActivity.context = this
+        com.nitap.attendance.MainActivity.check = FaceEngine.getInstance(this).setActivation("")
         FaceEngine.getInstance(this).init(2)
+
+        com.nitap.attendance.MainActivity.faceEngine = FaceEngine.getInstance(this)
+
         mydb = DBHelper(this)
         mydb!!.getAllUsers()
 
@@ -66,6 +71,10 @@ class MainActivity : AppCompatActivity(){
             val intent = Intent(this, UserActivity::class.java)
             startActivity(intent)
         }
+        //
+        val myintent = Intent(this, com.nitap.attendance.MainActivity::class.java)
+        startActivity(myintent)
+
     }
 
     override fun onResume() {
@@ -158,5 +167,9 @@ class MainActivity : AppCompatActivity(){
                 Toast.makeText(this, "Verify failed!", Toast.LENGTH_SHORT).show()
             }
         }
+
+        super.onActivityResult(requestCode, resultCode, data)
+
     }
+    
 }
