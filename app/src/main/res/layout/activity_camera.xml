@@ -8,9 +8,9 @@
 
     <FrameLayout
         android:id="@+id/cameraOverlayLayout"
-        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,13 +21,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
 
-            android:visibility="gone"
-            tools:visibility="visible" >
+            android:visibility="invisible"
+            tools:visibility="invisible">
 
             <com.ttv.facerecog.FaceRectView
                 android:id="@+id/rectanglesView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
         </io.fotoapparat.view.CameraView>
     </FrameLayout>
 

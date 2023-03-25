@@ -2,12 +2,23 @@ package com.ttv.facerecog
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.text.TextUtils
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.ttv.face.FaceEngine
+import com.ttv.face.FaceFeatureInfo
+import com.ttv.face.FaceResult
 
-class MainActivity : AppCompatActivity(){
-    companion object {
+class  MainActivity : AppCompatActivity(){
+    public companion object {
         lateinit var userLists: ArrayList<FaceEntity>
     }
 
@@ -29,10 +40,11 @@ class MainActivity : AppCompatActivity(){
         FaceEngine.getInstance(this).init(2)
 
         com.nitap.attendance.MainActivity.faceEngine = FaceEngine.getInstance(this)
-/*
+
         mydb = DBHelper(this)
         mydb!!.getAllUsers()
 
+        /*
         val btnRegister = findViewById<Button>(R.id.btnRegister)
         btnRegister.setOnClickListener {
             val intent = Intent()
@@ -48,12 +60,14 @@ class MainActivity : AppCompatActivity(){
         }
         btnVerify.isEnabled = false;
 
-        val btnUsers = findViewById<Button>(R.id.btnUser)
+        /*val btnUsers = findViewById<Button>(R.id.btnUser)
         btnUsers.setOnClickListener {
             val intent = Intent(this, UserActivity::class.java)
             startActivity(intent)
         }
         */
+         */
+
         //
         val myintent = Intent(this, com.nitap.attendance.MainActivity::class.java)
         startActivity(myintent)
@@ -65,7 +79,8 @@ class MainActivity : AppCompatActivity(){
 
        // findViewById<Button>(R.id.btnVerify).isEnabled = userLists.size > 0
     }
-/*
+
+    /*
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 1 && resultCode == RESULT_OK) {
             try {
@@ -155,4 +170,7 @@ class MainActivity : AppCompatActivity(){
 
     }
 */
+    fun register(view: View) {}
+    fun login(view: View) {}
+
 }

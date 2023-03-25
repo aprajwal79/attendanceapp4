@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context="com.nitap.attendance.FaceRecognitionActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,30 +12,27 @@
 
 
         <Button
-            android:id="@+id/btnRegister"
+            android:id="@+id/btnRegister1"
             android:layout_width="160dp"
             android:layout_height="80dp"
-            android:layout_marginTop="30dp"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:text="Register" />
+            android:layout_marginTop="30dp"
+            android:text="Register"
+            />
 
         <Button
-            android:id="@+id/btnVerify"
+            android:id="@+id/btnVerify1"
             android:layout_width="160dp"
             android:layout_height="80dp"
-            android:layout_below="@+id/btnRegister"
-            android:layout_marginTop="30dp"
+            android:layout_below="@+id/btnRegister1"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:text="Login" />
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="511dp"
+            android:text="Login"
 
-        <Button
-            android:id="@+id/btnUser"
-            android:layout_width="160dp"
-            android:layout_height="80dp"
-            android:layout_below="@+id/btnVerify"
-            android:layout_marginTop="30dp"
-            android:layout_centerHorizontal="true"
-            android:text="Users" />
+            />
 
     </RelativeLayout>
 
