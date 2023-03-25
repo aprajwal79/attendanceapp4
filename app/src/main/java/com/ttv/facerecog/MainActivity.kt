@@ -2,27 +2,9 @@ package com.ttv.facerecog
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Rect
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
-import android.text.TextUtils
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import com.ttv.face.*
-import com.ttv.imageutil.TTVImageFormat
-import com.ttv.imageutil.TTVImageUtil
-import com.ttv.imageutil.TTVImageUtilError
-import org.json.JSONObject
-import java.nio.ByteBuffer
-import java.util.ArrayList
+import androidx.appcompat.app.AppCompatActivity
+import com.ttv.face.FaceEngine
 
 class MainActivity : AppCompatActivity(){
     companion object {
