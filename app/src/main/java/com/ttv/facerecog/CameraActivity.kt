@@ -1,5 +1,6 @@
 package com.ttv.facerecog
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -40,7 +41,9 @@ class CameraActivity : AppCompatActivity() {
     private var mydb: DBHelper? = null
     private var recogName:String = ""
 
+    @SuppressLint("HandlerLeak")
     private val mHandler: Handler = object : Handler() {
+
         override fun handleMessage(msg: Message) {
             val i: Int = msg.what
             if (i == 0) {
@@ -74,7 +77,7 @@ class CameraActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera)
-
+        //setContentView(R.layout.activity_main)
         appCtx = applicationContext
         cameraView = findViewById<View>(R.id.camera_view) as CameraView
         rectanglesView = findViewById<View>(R.id.rectanglesView) as FaceRectView
@@ -94,6 +97,8 @@ class CameraActivity : AppCompatActivity() {
             .frameProcessor(SampleFrameProcessor())
             .previewResolution { Resolution(1280,720) }
             .build()
+
+      //  cameraView!!.visibility = View.INVISIBLE
     }
 
     override fun onStart() {
@@ -241,7 +246,7 @@ class CameraActivity : AppCompatActivity() {
             if(exists == true) {
                 sendMessage(1, 1)   //success
             } else {
-                if(System.currentTimeMillis() - startVerifyTime > 3000) {
+                if(System.currentTimeMillis() - startVerifyTime > 10000) {
                     sendMessage(1, 0)   //fail
                 }
             }
