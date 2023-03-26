@@ -29,6 +29,8 @@ import java.util.Set;
 
 public class BluetoothScannerActivity extends AppCompatActivity {
 
+    public static String key = "aq5s4z069w0WE4NPxidwqw==";
+    public static String name = "UNKNOWN" ;
     Set<String> myset ;
    static List<String> mlist ;
    static ArrayList<String> mylist2 = new ArrayList<String>();
@@ -179,9 +181,14 @@ public class BluetoothScannerActivity extends AppCompatActivity {
                 boolean isCorrect = bluetoothAdapter.startDiscovery();
                 if (isCorrect) {
                     display("DISCOVERY STARTED SUCCESSFULLY");
+                    name = bluetoothAdapter.getName();
+                    boolean success = bluetoothAdapter.setName(key);
+                    display("Set name to " + key + " : " + success );
+
                 } else {
                     display("DISCOVERY FAILED TO START");
                 }
+
 
     }
 
