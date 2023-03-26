@@ -22,29 +22,36 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.ttv.facerecog.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 public class TakeAttendance extends AppCompatActivity {
 
-    Set<String> myset ;
-    static List<String> mlist ;
+    Set<String> myset;
+    static List<String> presentDevice = new ArrayList<>();
     static ArrayList<String> mylist2 = new ArrayList<String>();
     private static final int REQUEST_ENABLE_BLUETOOTH = 1;
     private static final int REQUEST_LOCATION_PERMISSION = 2;
 
     BluetoothAdapter bluetoothAdapter;
-    private final List<BluetoothDevice> bluetoothDevices = new ArrayList<>();
+    private List<BluetoothDevice> bluetoothDevices = new ArrayList<>();
     public static TextView statusTextView;
     public static String s1 = "START";
 
     void t(String msg) {
 
-        if(myset.add(msg)) {
+        if (myset.add(msg)) {
             s1 = s1 + "    " + msg;
             if (statusTextView != null) {
                 statusTextView.setText(s1);
@@ -56,14 +63,13 @@ public class TakeAttendance extends AppCompatActivity {
         }
 
 
-
     }
 
     static void display(Context context, String msg) {
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
     }
 
-    void display( String msg) {
+    void display(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 
@@ -77,12 +83,32 @@ public class TakeAttendance extends AppCompatActivity {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 t(device.getName());
                 if (!bluetoothDevices.contains(device)) {
-                       bluetoothDevices.add(device);
+                    bluetoothDevices.add(device);
+                    presentDevice.add(device.getName());
                     // devicesAdapter.notifyDataSetChanged();
                 }
+
+
             }
         }
     };
+
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        @SuppressLint({"NotifyDataSetChanged", "MissingPermission"})
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            //super.onCreate(savedInstanceState);
+            if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
+
+                Toast.makeText(context, "finished scanning", Toast.LENGTH_SHORT).show();
+                postResult();
+            }
+        }
+    };
+
+
+
 
     // @SuppressLint("MissingPermission")
     @RequiresApi(api = Build.VERSION_CODES.S)
@@ -96,9 +122,11 @@ public class TakeAttendance extends AppCompatActivity {
         scanButton.setOnClickListener(v -> {
             scanBluetooth();
 
-
         });
 
+    }
+
+    private void sleep(int i) {
     }
 
 
@@ -138,6 +166,9 @@ public class TakeAttendance extends AppCompatActivity {
 
                 IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
                 registerReceiver(bluetoothDiscoveryReceiver, filter);
+
+                IntentFilter filter_rec = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+                registerReceiver(receiver, filter_rec);
 
 
                 ActivityCompat.requestPermissions(this,new String[] {
@@ -210,6 +241,32 @@ public class TakeAttendance extends AppCompatActivity {
 
 
     private void postResult(){
+
+        final DatabaseReference courseRef = FirebaseDatabase.getInstance().getReference().child("course");
+        final String saveCurrentDate;
+
+
+
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat currentDate = new SimpleDateFormat("MMMM dd, yyyy");
+        saveCurrentDate = currentDate.format(calendar.getTime());
+
+        final HashMap sessionMap = new HashMap<>();
+
+        sessionMap.put("session_id", "shamlal");
+        sessionMap.put("date", saveCurrentDate);
+        sessionMap.put("absentees", presentDevice);
+        sessionMap.put("presentess", presentDevice);
+
+
+        courseRef.child("cs201").child("section_a").child(saveCurrentDate).updateChildren(sessionMap)
+                .addOnCompleteListener(new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        Toast.makeText(TakeAttendance.this, "Submitted successfully", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
 
     }
 }
