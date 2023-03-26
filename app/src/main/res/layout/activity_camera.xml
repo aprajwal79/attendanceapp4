@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CameraActivity">
+    tools:context="com.nitap.attende.RecognitionActivity">
 
     <FrameLayout
         android:id="@+id/cameraOverlayLayout"
@@ -19,7 +19,7 @@
         <io.fotoapparat.view.CameraView
             android:id="@+id/camera_view"
             android:layout_width="1sp"
-            android:layout_height="1sp"
+            android:layout_height="11sp"
 
             android:visibility="visible"
             tools:visibility="visible">

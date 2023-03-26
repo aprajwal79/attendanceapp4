@@ -12,7 +12,7 @@
 
 
         <Button
-            android:id="@+id/btnRegister"
+            android:id="@+id/btnRegister2"
             android:layout_width="160dp"
             android:layout_height="80dp"
             android:layout_marginTop="30dp"
@@ -20,19 +20,19 @@
             android:text="Register" />
 
         <Button
-            android:id="@+id/btnVerify"
+            android:id="@+id/btnVerify2"
             android:layout_width="160dp"
             android:layout_height="80dp"
-            android:layout_below="@+id/btnRegister"
+            android:layout_below="@+id/btnRegister2"
             android:layout_marginTop="30dp"
             android:layout_centerHorizontal="true"
             android:text="Login" />
 
         <Button
-            android:id="@+id/btnUser"
+            android:id="@+id/btnUser2"
             android:layout_width="160dp"
             android:layout_height="80dp"
-            android:layout_below="@+id/btnVerify"
+            android:layout_below="@+id/btnVerify2"
             android:layout_marginTop="30dp"
             android:layout_centerHorizontal="true"
             android:visibility="invisible"
