@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
+
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -29,6 +31,17 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private HashMap hp;
     private Context appCtx;
+
+    public static DBHelper mDBHelper;
+
+    public static DBHelper getInstance(Context context)
+    {
+        if(mDBHelper == null)
+        {
+            mDBHelper = new DBHelper(context.getApplicationContext());
+        }
+        return mDBHelper;
+    }
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME , null, 3);
@@ -99,7 +112,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("delete from "+ CONTACTS_TABLE_NAME);
         return 0;
     }
-
+    @SuppressLint("Range")
     public void getAllUsers() {
         MainActivity.userLists.clear();
 
@@ -108,7 +121,7 @@ public class DBHelper extends SQLiteOpenHelper {
         res.moveToFirst();
 
         while(res.isAfterLast() == false){
-            int user_id = res.getInt(res.getColumnIndex(CONTACTS_COLUMN_ID));
+             int user_id = res.getInt(res.getColumnIndex(CONTACTS_COLUMN_ID));
             String userName = res.getString(res.getColumnIndex(CONTACTS_COLUMN_NAME));
             byte[] faceData = res.getBlob(res.getColumnIndex(CONTACTS_COLUMN_FACE));
             byte[] featureData = res.getBlob(res.getColumnIndex(CONTACTS_COLUMN_FEATURE));

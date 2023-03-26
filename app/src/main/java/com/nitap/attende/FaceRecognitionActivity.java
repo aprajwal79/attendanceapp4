@@ -47,7 +47,8 @@ public class FaceRecognitionActivity extends AppCompatActivity {
     private Context mycontext;
 
     private DBHelper mydb ;
-
+    public static int REQUEST_CODE_REGISTER = 1;
+    public static int REQUEST_CODE_VERIFY = 2;
     public static ArrayList userLists;
     Button btnVerify,btnRegister ;
 
@@ -62,12 +63,15 @@ public class FaceRecognitionActivity extends AppCompatActivity {
         setContentView(layout.activity_main);
         //Toast.makeText(getApplicationContext(), "FACE RECOGNITION ACTIVITY", Toast.LENGTH_SHORT).show();
         this.mydb = new DBHelper(this);
-        this.mydb = new DBHelper((Context)this);
+       // this.mydb = new DBHelper(this);
         DBHelper mydb = this.mydb;
+
         mydb.getAllUsers();
         btnVerify = findViewById(id.btnVerify);
         btnRegister = findViewById(id.btnRegister);
-        btnVerify.setEnabled(false);
+        //btnVerify.setEnabled(false);
+        boolean hasUsers = mydb.numberOfRows() > 0;
+        btnVerify.setEnabled(mydb.numberOfRows() > 0);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,15 +81,15 @@ public class FaceRecognitionActivity extends AppCompatActivity {
                 intent.setAction("android.intent.action.PICK");
                 //intent.setAction(Intent.ACTION_PICK);
                 //intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_CODE_REGISTER);
             }
         });
         btnVerify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "VERIFY CLICKED", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "VERIFY CLICKED", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
-                startActivityForResult(intent, 2);
+                startActivityForResult(intent, REQUEST_CODE_VERIFY);
             }
         });
        // btnRegister.performClick();
@@ -111,22 +115,22 @@ public class FaceRecognitionActivity extends AppCompatActivity {
 
         ////////
 
-        display("ACTIVITY RESULT");
-        if (requestCode == 1 && resultCode == -1) {
+        //display("ACTIVITY RESULT");
+        if (requestCode == REQUEST_CODE_REGISTER && resultCode == RESULT_OK) {
             try {
                 Context var10000 = (Context)this;
                 Uri var10001 = data != null ? data.getData() : null;
                 if (data == null) {
                     display("DATA NULL");
                 } else {
-                    display(data.getData().toString());
+                   // display(data.getData().toString());
                 }
                 Intrinsics.checkNotNull(var10001);
                 Bitmap var20 = ImageRotator.getCorrectlyOrientedImage(var10000, var10001);
                 if (var20 == null) {
                     display("BITMAP NULL");
                 } else {
-                    display(var20.toString());
+                   // display(var20.toString());
                 }
                 Intrinsics.checkNotNullExpressionValue(var20, "ImageRotator.getCorrectl…Image(this, data?.data!!)");
                 Bitmap bitmap = var20;
@@ -135,13 +139,13 @@ public class FaceRecognitionActivity extends AppCompatActivity {
                 if (var21 == null) {
                     display("FACERESULT NULL");
                 } else {
-                    display(Objects.toString(var21.size()));
+                    //display(Objects.toString(var21.size()));
                 }
                 final List faceResults = var21;
                 Collection var6 = (Collection)faceResults;
                 if (var6.size() == 1) {
                     com.nitap.attende.MainActivity.faceEngine.extractFeature(bitmap, true, faceResults);
-                    display("FEATURES EXTRACTED");
+                    //display("FEATURES EXTRACTED");
                    // StringCompanionObject var7 = StringCompanionObject.INSTANCE;
                     String var8 = "User%03d";
                     Object[] var22 = new Object[1];
@@ -169,7 +173,7 @@ public class FaceRecognitionActivity extends AppCompatActivity {
                     Intrinsics.checkNotNullExpressionValue(var24, "AlertDialog.Builder(cont…                .create()");
                     final AlertDialog confirmUpdateDialog = var24;
                     confirmUpdateDialog.show();
-                    display("ALERT SHOWED");
+                   // display("ALERT SHOWED");
                     confirmUpdateDialog.getButton(-1).setOnClickListener((View.OnClickListener)(new View.OnClickListener() {
                         public final void onClick(@Nullable View v) {
                             EditText var10000 = editText;
@@ -199,6 +203,7 @@ public class FaceRecognitionActivity extends AppCompatActivity {
                                     DBHelper var9 = mydb;
                                     Intrinsics.checkNotNull(var9);
                                     int user_id = var9.insertUser(s, headImg, ((FaceResult)faceResults.get(0)).feature);
+
                                     FaceEntity face = new FaceEntity(user_id, s, headImg, ((FaceResult)faceResults.get(0)).feature);
                                     MainActivity.Companion.getUserLists().add(face);
 
@@ -224,7 +229,11 @@ public class FaceRecognitionActivity extends AppCompatActivity {
             } catch (Exception var13) {
                 var13.printStackTrace();
             }
-        } else if (requestCode == 2 && resultCode == -1) {
+        }
+
+        else
+
+            if (requestCode == REQUEST_CODE_VERIFY && resultCode == RESULT_OK) {
             Intrinsics.checkNotNull(data);
             int verifyResult = data.getIntExtra("verifyResult", Toast.LENGTH_SHORT);
             String recogName = data.getStringExtra("verifyName");
@@ -234,7 +243,7 @@ public class FaceRecognitionActivity extends AppCompatActivity {
                 Toast.makeText((Context)this, (CharSequence)"Verify failed!", Toast.LENGTH_SHORT).show();
             }
         }
-
+        btnVerify.setEnabled(mydb.numberOfRows() > 0);
         super.onActivityResult(requestCode, resultCode, data);
 
         ////////
