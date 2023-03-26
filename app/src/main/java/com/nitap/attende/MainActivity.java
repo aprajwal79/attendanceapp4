@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toast.makeText(this, Objects.toString(check), Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(this,FaceRecognitionActivity.class));
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 }

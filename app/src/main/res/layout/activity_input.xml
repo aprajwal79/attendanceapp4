@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:orientation="vertical"
-    tools:context="com.nitap.attende.FaceRecognitionActivity">
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/display_image"
@@ -24,16 +23,6 @@
         android:layout_height="wrap_content"
         android:text="Upload your image"
         android:background="@color/white">
-
-    </Button>
-
-    <Button
-        android:id="@+id/button_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:background="@color/white"
-        android:text="Continue --->">
 
     </Button>
 

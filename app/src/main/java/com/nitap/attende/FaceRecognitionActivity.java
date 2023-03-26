@@ -5,6 +5,7 @@ import static com.ttv.facerecog.R.*;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.nitap.attende.pages.HomeActivity;
 import com.ttv.face.FaceFeatureInfo;
 import com.ttv.face.FaceResult;
 import com.ttv.facerecog.CameraActivity;
@@ -41,53 +43,60 @@ import java.util.List;
 import java.util.Objects;
 
 import kotlin.jvm.internal.Intrinsics;
-//import kotlin.jvm.internal.StringCompanionObject;
+
 
 public class FaceRecognitionActivity extends AppCompatActivity {
     private Context mycontext;
 
     private DBHelper mydb ;
 
+
+
     public static ArrayList userLists;
-    Button btnVerify,btnRegister ;
+    Button btnRegister, submitButton ;
 
     void display(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         userLists = new ArrayList(0);
         super.onCreate(savedInstanceState);
-        setContentView(layout.activity_main);
+        setContentView(layout.activity_face_recognition);
         //Toast.makeText(getApplicationContext(), "FACE RECOGNITION ACTIVITY", Toast.LENGTH_SHORT).show();
         this.mydb = new DBHelper(this);
         this.mydb = new DBHelper((Context)this);
         DBHelper mydb = this.mydb;
         mydb.getAllUsers();
-        btnVerify = findViewById(id.btnVerify);
-        btnRegister = findViewById(id.btnRegister);
-        btnVerify.setEnabled(false);
+//        btnVerify = findViewById(id.btnVerify);
+//        btnRegister = findViewById(id.btnRegister);
+//        btnVerify.setEnabled(true);
+
+        submitButton = findViewById(id.button_next);
+
+        btnRegister = findViewById(id.upload_btn);
+        submitButton.setEnabled(false);
+
+
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // Toast.makeText(getApplicationContext(), "REGISTER CLICKED", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction("android.intent.action.PICK");
-                //intent.setAction(Intent.ACTION_PICK);
-                //intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
             }
         });
-        btnVerify.setOnClickListener(new View.OnClickListener() {
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "VERIFY CLICKED", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
-                startActivityForResult(intent, 2);
+                startActivity(new Intent(FaceRecognitionActivity.this, HomeActivity.class));
             }
         });
+
        // btnRegister.performClick();
 
 
@@ -205,9 +214,10 @@ public class FaceRecognitionActivity extends AppCompatActivity {
                                     FaceFeatureInfo faceFeatureInfo = new FaceFeatureInfo(user_id, ((FaceResult)faceResults.get(0)).feature);
                                     com.nitap.attende.MainActivity.faceEngine.registerFaceFeature(faceFeatureInfo);
                                     confirmUpdateDialog.cancel();
-                                    View var10 = findViewById(id.btnVerify);
+                                    View var10 = findViewById(id.upload_btn);
                                     Intrinsics.checkNotNullExpressionValue(var10, "findViewById<Button>(R.id.btnVerify)");
                                     ((Button)var10).setEnabled(MainActivity.Companion.getUserLists().size() > 0);
+                                    submitButton.setEnabled(true);
                                     Toast.makeText(getApplicationContext(), "Register succeed!", Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -224,16 +234,8 @@ public class FaceRecognitionActivity extends AppCompatActivity {
             } catch (Exception var13) {
                 var13.printStackTrace();
             }
-        } else if (requestCode == 2 && resultCode == -1) {
-            Intrinsics.checkNotNull(data);
-            int verifyResult = data.getIntExtra("verifyResult", Toast.LENGTH_SHORT);
-            String recogName = data.getStringExtra("verifyName");
-            if (verifyResult == 1) {
-                Toast.makeText((Context)this, (CharSequence)("Verify succeed! " + recogName), Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText((Context)this, (CharSequence)"Verify failed!", Toast.LENGTH_SHORT).show();
-            }
         }
+
 
         super.onActivityResult(requestCode, resultCode, data);
 
